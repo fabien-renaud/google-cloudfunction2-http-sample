@@ -1,6 +1,7 @@
 const {build} = require('esbuild');
 const fs = require('fs');
 const {version, description, dependencies} = require('./package.json');
+const {nodeExternalsPlugin} = require('esbuild-node-externals');
 
 const name = 'google-cloudfunction2-http-sample';
 
@@ -12,7 +13,8 @@ build({
     minify: false,
     bundle: true,
     target: 'es2021',
-    outfile: `build/${name}/index.js`
+    outfile: `build/${name}/index.js`,
+    plugins: [nodeExternalsPlugin()]
 })
     .then(() => {
         // Create new package.json from original metadata
